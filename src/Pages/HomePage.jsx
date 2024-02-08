@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { UrlState } from "../context/UrlProvider";
 import axios from "axios";
-import { baseurl } from "../constants/constants";
+import { BASE_URL } from "../constants/constants";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const HomePage = () => {
       };
 
       const result = await axios.post(
-        `${baseurl}api/urlShortner/`,
+        `${BASE_URL}api/urlShortner/`,
         { url },
         config
       );
@@ -37,7 +37,7 @@ const HomePage = () => {
   const fetchURL = async () => {
     try {
       const token = user?.token;
-      const result = await axios.get(`${baseurl}api/urlShortner/`, {
+      const result = await axios.get(`${BASE_URL}api/urlShortner/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -126,14 +126,14 @@ const HomePage = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
-                        {baseurl}
+                        {BASE_URL}
                         {link.shortId}
                       </td>
                       <td>
                         <button
                           className="copy-btn"
                           onClick={() =>
-                            copyLinkToClipboard(baseurl + link.shortId, index)
+                            copyLinkToClipboard(BASE_URL + link.shortId, index)
                           }
                         >
                           {link.copied === true ? "Copied" : "Copy"}

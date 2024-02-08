@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { UrlState } from "../context/UrlProvider";
 import axios from "axios";
-import { baseurl } from "../constants/constants";
+import { BASE_URL } from "../constants/constants";
 import UpdateModal from "../components/updateModal";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -25,7 +25,7 @@ const Dashboard = () => {
       const token = user?.token;
 
       if (user) {
-        const result = await axios.get(`${baseurl}api/urlShortner/`, {
+        const result = await axios.get(`${BASE_URL}api/urlShortner/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -53,7 +53,7 @@ const Dashboard = () => {
       };
 
       const result = await axios.patch(
-        `${baseurl}api/urlShortner/update/${urlId}`,
+        `${BASE_URL}api/urlShortner/update/${urlId}`,
         { url },
         config
       );
@@ -75,7 +75,7 @@ const Dashboard = () => {
       };
 
       const result = await axios.delete(
-        `${baseurl}api/urlShortner/delete/${id}`,
+        `${BASE_URL}api/urlShortner/delete/${id}`,
         config
       );
 
@@ -119,47 +119,43 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {user ? (
-                  urlData.map((link, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>
-                        {baseurl}
-                        {link.shortId}
-                      </td>
-                      <td>{link.visitHistory.length}</td>
-                      <td>
-                        {" "}
-                        <button
-                          className="copy-btn"
-                          onClick={() =>
-                            copyLinkToClipboard(baseurl + link.shortId, index)
-                          }
-                        >
-                          {link.copied === true ? "Copied" : "Copy"}
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="edit-btn"
-                          onClick={() => openModal(link._id)}
-                        >
-                          Update
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="del-btn"
-                          onClick={() => deleteURL(link._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <></>
-                )}
+                {urlData.map((link, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>
+                      {BASE_URL}
+                      {link.shortId}
+                    </td>
+                    <td>{link.visitHistory.length}</td>
+                    <td>
+                      {" "}
+                      <button
+                        className="copy-btn"
+                        onClick={() =>
+                          copyLinkToClipboard(BASE_URL + link.shortId, index)
+                        }
+                      >
+                        {link.copied === true ? "Copied" : "Copy"}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => openModal(link._id)}
+                      >
+                        Update
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="del-btn"
+                        onClick={() => deleteURL(link._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
